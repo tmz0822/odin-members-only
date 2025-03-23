@@ -1,0 +1,3 @@
+const SQL = `
+  CREATE TABLE
+`;

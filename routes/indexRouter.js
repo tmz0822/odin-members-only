@@ -1,5 +1,5 @@
 const { Router } = require('express');
 
-const indexRouter = new Router();
+const indexRouter = Router();
 
 module.exports = indexRouter;
