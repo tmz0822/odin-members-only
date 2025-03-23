@@ -1,9 +1,6 @@
 const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
+// TODO: handle signup / validate and sanitize / bcrypt the password
 
-
-const user
-
-
-module.exports = {}
+module.exports = {};
