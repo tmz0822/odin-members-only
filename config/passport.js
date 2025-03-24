@@ -12,7 +12,7 @@ const verifyCallback = async (username, password, done) => {
       return done(null, false, { message: 'Incorrect username' });
     }
 
-    const validPassword = bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
       return done(null, false, { message: 'Incorrect password' });

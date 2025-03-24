@@ -47,7 +47,7 @@ const signUpPost = [
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render('signUpForm', {
+      return res.status(400).render('sign-up-form', {
         title: 'Sign Up',
         errors: errors.array(),
       });
@@ -71,12 +71,15 @@ const signUpPost = [
 ];
 
 function loginGet(req, res) {
-  res.render('login-form');
+  const messages = req.session.messages || [];
+  req.session.messages = [];
+  res.render('login-form', { messages });
 }
 
 const loginPost = passport.authenticate('local', {
-  failureRedirect: '/login-failure',
+  failureRedirect: '/login',
   successRedirect: '/',
+  failureMessage: true,
 });
 
 function signOutGet(req, res, next) {
