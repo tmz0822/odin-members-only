@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const db = require('../db/queries');
+const passport = require('passport');
 
 // TODO: handle signup / validate and sanitize / bcrypt the password
 
@@ -71,7 +72,18 @@ const signUpPost = [
   },
 ];
 
+function loginGet(req, res) {
+  res.render('login-form');
+}
+
+const loginPost = passport.authenticate('local', {
+  failureRedirect: '/login-failure',
+  successRedirect: '/',
+});
+
 module.exports = {
   signUpGet,
   signUpPost,
+  loginGet,
+  loginPost,
 };
