@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const db = require('../db/queries');
 
 // TODO: handle signup / validate and sanitize / bcrypt the password
 
@@ -39,12 +40,12 @@ const validateInputs = [
 ];
 
 function signUpGet(req, res) {
-  res.render('signUpForm');
+  res.render('sign-up-form');
 }
 
 const signUpPost = [
   validateInputs,
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render('signUpForm', {
@@ -53,8 +54,20 @@ const signUpPost = [
       });
     }
 
-    const { firstName, lastName, username, password, confirmPassword } =
-      req.body;
+    const { firstName, lastName, username, password } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = {
+      firstName,
+      lastName,
+      username,
+      password: hashedPassword,
+    };
+
+    await db.signUpUser(user);
+
+    res.redirect('/login');
   },
 ];
 
