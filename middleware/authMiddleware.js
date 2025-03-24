@@ -1,7 +1,38 @@
-function isAuthenticated(req, res, next) {}
+function isAuthenticated(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.status(401).send('You are not authorized to view this resource');
+  }
 
-function isMember(req, res, next) {}
+  next();
+}
 
-function isAdmin(req, res, next) {}
+function isMember(req, res, next) {
+  if (!req.isAuthenticated() && !req.user.is_member) {
+    return res.status(401).send('You are not an member');
+  }
 
-module.exports = { isAuthenticated, isMember, isAdmin };
+  next();
+}
+
+function isAdmin(req, res, next) {
+  if (!req.isAuthenticated() && !req.user.is_admin) {
+    return res.status(401).send('You are not an admin');
+  }
+
+  next();
+}
+
+function redirectToHomepageIfAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+
+  next();
+}
+
+module.exports = {
+  isAuthenticated,
+  isMember,
+  isAdmin,
+  redirectToHomepageIfAuthenticated,
+};

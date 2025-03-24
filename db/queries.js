@@ -1,5 +1,9 @@
 const pool = require('./pool');
 
+/**
+ * USERS
+ * */
+
 async function signUpUser(user) {
   const { firstName, lastName, username, password } = user;
 
@@ -47,9 +51,24 @@ async function updateUserMembership(id) {
   );
 }
 
+/**
+ * MESSAGES
+ */
+
+async function addMessage(userId, message) {
+  await pool.query(
+    `
+      INSERT INTO messages (user_id, title, text)
+      VALUES ($1, $2, $3)
+    `,
+    [userId, message.title, message.text]
+  );
+}
+
 module.exports = {
   signUpUser,
   getUserByUsername,
   getUserById,
   updateUserMembership,
+  addMessage,
 };

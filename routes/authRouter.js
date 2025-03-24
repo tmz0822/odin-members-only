@@ -4,12 +4,24 @@ const authRouter = Router();
 
 const authController = require('../controllers/authController');
 
-authRouter.get('/signup', authController.signUpGet);
+const {
+  redirectToHomepageIfAuthenticated,
+} = require('../middleware/authMiddleware');
+
+authRouter.get(
+  '/signup',
+  redirectToHomepageIfAuthenticated,
+  authController.signUpGet
+);
 authRouter.post('/signup', authController.signUpPost);
 
-authRouter.get('/login', authController.loginGet);
+authRouter.get(
+  '/login',
+  redirectToHomepageIfAuthenticated,
+  authController.loginGet
+);
 authRouter.post('/login', authController.loginPost);
 
-authRouter.post('/signout', authController.signOutPost);
+authRouter.get('/signout', authController.signOutGet);
 
 module.exports = authRouter;

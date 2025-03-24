@@ -1,1 +1,6 @@
 <a href="/signup">Sign up</a>
+<a href="/login">Login</a>
+
+<% if(user !== null) { %>
+<a href="/messages/new-message">Create a new message</a>
+<%}%>

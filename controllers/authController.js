@@ -79,7 +79,7 @@ const loginPost = passport.authenticate('local', {
   successRedirect: '/',
 });
 
-function signOutPost(req, res, next) {
+function signOutGet(req, res, next) {
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -93,5 +93,5 @@ module.exports = {
   signUpPost,
   loginGet,
   loginPost,
-  signOutPost,
+  signOutGet,
 };

@@ -3,9 +3,10 @@ const path = require('node:path');
 const passport = require('passport');
 const session = require('express-session');
 
-const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
 const usersRouter = require('./routes/usersRouter');
+const messagesRouter = require('./routes/messagesRouter');
+
 const pool = require('./db/pool');
 
 const pgSession = require('connect-pg-simple')(session);
@@ -43,15 +44,17 @@ app.use(
 require('./config/passport');
 app.use(passport.session());
 
-// app.use((req, res, next) => {
-//   console.log(req.session);
-//   console.log(req.user);
-//   next();
-// });
+app.use((req, res, next) => {
+  // console.log(req.session);
+  // console.log(req.user);
+  res.locals.user = req.user || null;
+  next();
+});
 
 // routers
 app.use('/', authRouter);
 app.use('/user', usersRouter);
+app.use('/messages', messagesRouter);
 app.use('/', (req, res) => res.render('index'));
 
 // server
