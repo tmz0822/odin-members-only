@@ -4,3 +4,22 @@
 <% if(user !== null) { %>
 <a href="/messages/new-message">Create a new message</a>
 <%}%>
+
+<ul class="messages-list">
+  <% messages.forEach((message) => { %>
+  <li>
+    <article>
+      <h2><%= message.title %></h2>
+      <p><%= message.text %></p>
+    </article>
+    <footer>
+      <p>
+        By <strong><%= message.author %></strong>
+        <time datetime="<%= message.created_at%>"
+          ><%=new Date(message.created_at).toLocaleString()%></time
+        >
+      </p>
+    </footer>
+  </li>
+  <% }) %>
+</ul>

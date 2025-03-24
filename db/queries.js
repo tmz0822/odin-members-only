@@ -54,6 +54,18 @@ async function updateUserMembership(id) {
 /**
  * MESSAGES
  */
+async function getMessages() {
+  const { rows } = await pool.query(
+    `
+      SELECT u.first_name || ' ' || u.last_name AS author, m.title, m.text, m.created_at
+      FROM messages m
+      JOIN users u
+      ON m.user_id = u.id;
+    `
+  );
+
+  return rows;
+}
 
 async function addMessage(userId, message) {
   await pool.query(
@@ -70,5 +82,6 @@ module.exports = {
   getUserByUsername,
   getUserById,
   updateUserMembership,
+  getMessages,
   addMessage,
 };
