@@ -1,3 +1,5 @@
+const { Client } = require('pg');
+
 const SQL = `
   CREATE TABLE users (
     id          INTEGER GENERATE ALWAYS AS IDENTITY PRIMARY KEY,
@@ -16,3 +18,23 @@ const SQL = `
     created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
   );
 `;
+
+async function populateData() {
+  console.log('seeding...');
+  const client = new Client({
+    connectionString:
+      process.env.DATABASE_URL || process.env.LOCAL_DATABASE_URL,
+  });
+
+  try {
+    await client.connect();
+    await client.query(SQL);
+    console.log('done');
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await client.end();
+  }
+}
+
+populateData();
