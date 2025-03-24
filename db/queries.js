@@ -36,4 +36,20 @@ async function getUserById(id) {
   return rows[0];
 }
 
-module.exports = { signUpUser, getUserByUsername, getUserById };
+async function updateUserMembership(id) {
+  await pool.query(
+    ` 
+      UPDATE users
+      SET is_member = true
+      WHERE id = $1
+    `,
+    [id]
+  );
+}
+
+module.exports = {
+  signUpUser,
+  getUserByUsername,
+  getUserById,
+  updateUserMembership,
+};

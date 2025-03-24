@@ -3,8 +3,6 @@ const bcrypt = require('bcryptjs');
 const db = require('../db/queries');
 const passport = require('passport');
 
-// TODO: handle signup / validate and sanitize / bcrypt the password
-
 const validateInputs = [
   body('firstName')
     .trim()
@@ -81,9 +79,19 @@ const loginPost = passport.authenticate('local', {
   successRedirect: '/',
 });
 
+function signOutPost(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+}
+
 module.exports = {
   signUpGet,
   signUpPost,
   loginGet,
   loginPost,
+  signOutPost,
 };
