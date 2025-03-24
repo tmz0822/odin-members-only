@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const indexRouter = require('./routes/indexRouter');
+const authRouter = require('./routes/authRouter');
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 app.use(passport.session());
 
 // routers
-app.use('/', indexRouter);
+app.use('/', authRouter);
+app.use('/', (req, res) => res.render('index'));
 
 // server
 const PORT = 3000;

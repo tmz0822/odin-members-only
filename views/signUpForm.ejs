@@ -1,3 +1,4 @@
+<%- include("partials/errors.ejs") %>
 <form class="signup-form" action="/signup" method="POST">
   <div class="form-field">
     <div class="form-field">
@@ -28,7 +29,7 @@
     <div class="form-field">
       <label for="confirmPassword">Confirm Password</label>
       <input
-        type="confirmPassword"
+        type="password"
         name="confirmPassword"
         id="confirmPassword"
         required
