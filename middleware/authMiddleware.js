@@ -1,32 +1,31 @@
 function isAuthenticated(req, res, next) {
-  if (!req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
     return res.status(401).send('You are not authorized to view this resource');
   }
-
-  next();
 }
 
 function isMember(req, res, next) {
-  if (!req.isAuthenticated() && !req.user.is_member) {
+  if (req.isAuthenticated() && req.user.is_member) {
+    next();
+  } else {
     return res.status(401).send('You are not an member');
   }
-
-  next();
 }
 
 function isAdmin(req, res, next) {
-  if (!req.isAuthenticated() && !req.user.is_admin) {
+  if (req.isAuthenticated() && req.user.is_admin) {
+    next();
+  } else {
     return res.status(401).send('You are not an admin');
   }
-
-  next();
 }
 
 function redirectToHomepageIfAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect('/');
   }
-
   next();
 }
 

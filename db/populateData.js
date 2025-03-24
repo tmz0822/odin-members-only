@@ -20,7 +20,6 @@ const SQL = `
     created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
   );
 
-
   INSERT INTO users (first_name, last_name, username, password, is_member, is_admin)
   VALUES
   ('Admin', 'User', 'admin', '$2b$10$StArQXKAArvU2rYECHMtWOu1MSon8egd.0VgYkKk65MuNOcKEJ1a.', FALSE, TRUE),  -- Admin

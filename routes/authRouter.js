@@ -13,6 +13,7 @@ authRouter.get(
   redirectToHomepageIfAuthenticated,
   authController.signUpGet
 );
+
 authRouter.post('/signup', authController.signUpPost);
 
 authRouter.get(

@@ -1,17 +1,21 @@
+<% if(user == null) { %>
 <a href="/signup">Sign up</a>
 <a href="/login">Login</a>
-
-<% if(user !== null) { %>
+<% } %> <% if(user !== null) { %>
 <a href="/messages/new-message">Create a new message</a>
-<%}%>
+<a href="/signout">Sign out</a>
+
+<% } %>
 
 <ul class="messages-list">
   <% messages.forEach((message) => { %>
-  <li>
+  <li class="message">
     <article>
       <h2><%= message.title %></h2>
       <p><%= message.text %></p>
     </article>
+
+    <% if (user !== null && (user.is_member || user.is_admin)) { %>
     <footer>
       <p>
         By <strong><%= message.author %></strong>
@@ -20,6 +24,11 @@
         >
       </p>
     </footer>
+    <% } %> <% if(user!== null && user.is_admin) { %>
+    <form action="messages/<%= message.id %>/delete" method="post">
+      <button>Delete</button>
+    </form>
+    <% }%>
   </li>
   <% }) %>
 </ul>

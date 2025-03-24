@@ -12,4 +12,11 @@ async function newMessagePost(req, res) {
   res.redirect('/');
 }
 
-module.exports = { newMessageGet, newMessagePost };
+async function deleteMessagePost(req, res) {
+  const id = req.params.id;
+  await db.deleteMessage(id);
+
+  res.redirect('/');
+}
+
+module.exports = { newMessageGet, newMessagePost, deleteMessagePost };

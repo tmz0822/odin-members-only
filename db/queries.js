@@ -57,7 +57,7 @@ async function updateUserMembership(id) {
 async function getMessages() {
   const { rows } = await pool.query(
     `
-      SELECT u.first_name || ' ' || u.last_name AS author, m.title, m.text, m.created_at
+      SELECT m.id, u.first_name || ' ' || u.last_name AS author, m.title, m.text, m.created_at
       FROM messages m
       JOIN users u
       ON m.user_id = u.id;
@@ -77,6 +77,16 @@ async function addMessage(userId, message) {
   );
 }
 
+async function deleteMessage(id) {
+  await pool.query(
+    `
+      DELETE FROM messages
+      WHERE id = $1
+    `,
+    [id]
+  );
+}
+
 module.exports = {
   signUpUser,
   getUserByUsername,
@@ -84,4 +94,5 @@ module.exports = {
   updateUserMembership,
   getMessages,
   addMessage,
+  deleteMessage,
 };
